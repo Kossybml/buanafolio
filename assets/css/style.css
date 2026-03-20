@@ -474,7 +474,7 @@ body {
   font-size: 0.7rem; font-weight: 700;
   display: flex; align-items: center; gap: 0.25rem;
 }
-.w-chat-body .w-chat-name::before { content: '↩'; font-size: 0.62rem; color: var(--accent-color); }
+.w-chat-body .w-chat-name::before { content: '\F51F'; font-family: 'bootstrap-icons'; font-size: 0.62rem; color: var(--accent-color); }
 .w-chat-body .w-chat-msg {
   font-size: 0.64rem; color: var(--widget-sub); margin-top: 0.16rem; line-height: 1.4;
 }
@@ -509,17 +509,27 @@ body {
   padding: 0.65rem 0.95rem; border-radius: 99px;
   display: flex; align-items: center; gap: 0.5rem;
 }
-.w-social-avatars { display: flex; }
-.w-social-avatars span {
-  width: 24px; height: 24px; border-radius: 50%;
-  border: 2px solid #fff; display: block; margin-left: -7px;
+/* ── W4: Social proof pill — right side, bottom ── */
+.w-social {
+  left: calc(50% + clamp(50px, 8vw, 120px));
+  bottom: clamp(3.5rem, 8vh, 7rem);
+  padding: 0.65rem 0.95rem; border-radius: 99px;
+  display: flex; align-items: center; gap: 0.5rem;
 }
-.w-social-avatars span:first-child { margin-left: 0; }
-.w-social-avatars span:nth-child(1) { background: #4caf50; }
-.w-social-avatars span:nth-child(2) { background: #2196f3; }
-.w-social-avatars span:nth-child(3) { background: #9c27b0; }
+.w-social-avatars { display: flex; align-items: center; }
+.w-social-avatars img {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  margin-left: -8px;
+}
+.w-social-avatars img:first-child { margin-left: 0; }
 .w-social-info { display: flex; align-items: center; gap: 0.22rem; }
-.w-social-heart { font-size: 0.85rem; line-height: 1; }
+.w-social-heart { font-size: 0.85rem; line-height: 1; color: #f7931e; }
 .w-social-count { font-size: clamp(0.72rem,1vw,0.85rem); font-weight: 700; }
 
 /* ════════════════════════════════════════════════════
@@ -534,16 +544,9 @@ body {
   #navbar { padding: 1.1rem 1.8rem; }
 
   .hero-title  { font-size: clamp(3.8rem, 18vw, 9rem); }
-  .hero-script { font-size: clamp(1.8rem, 5.5vw, 3.2rem); top: 20%; }
-  .hero-photo  { width: clamp(200px, 52vw, 380px); position: absolute; z-index: 9;}
+  .hero-script { font-size: clamp(1.8rem, 5.5vw, 3.2rem); top: 45%; }
+  .hero-photo  { width: clamp(200px, 62vw, 400px); position: absolute;}
   .photo-ring  { width: clamp(160px, 44vw, 310px); }
-  .hero-mobile-text {
-    display: flex;
-    /* sit in the upper portion of the hero — above the photo */
-    top: clamp(5.5rem, 34vh, 7rem);   /* just below navbar */
-    left: 0;
-    right: 0;
-  }
   .w-prospects { right: calc(50% + clamp(60px, 10vw, 140px)); }
   .w-chat      { left:  calc(50% + clamp(60px, 10vw, 140px)); }
   .w-meetings  { right: calc(50% + clamp(35px,  6vw,  90px)); }
@@ -570,7 +573,7 @@ body {
 
   /* ── Headshot — large, centred, anchored to bottom ── */
   .hero-photo {
-    width: min(100vw, 340px, 100%);
+    width: min(100vw, 400px, 100%);
     bottom: 0;
     transform: translateX(-50%);
     /* CRITICAL: z-index below text block so photo never overlaps text */
