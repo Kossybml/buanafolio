@@ -1,0 +1,650 @@
+/* ════════════════════════════════════════════════════
+   BUANA'S ART — style.css
+════════════════════════════════════════════════════ */
+
+/* ── FONTS ─────────────────────────────────────────── */
+:root {
+  --default-font: "Raleway", system-ui, -apple-system, sans-serif;
+  --heading-font: 'Kanit', sans-serif;
+  --nav-font:     "Raleway", sans-serif;
+}
+
+/* ── LIGHT THEME ────────────────────────────────────── */
+/* --background-color: Background color for the entire website, including individual sections */
+/* --default-color: Default color used for the majority of the text content across the entire website */
+/* --heading-color: Color for headings, subheadings and title throughout the website */
+/* --accent-color: Accent color that represents your brand on the website */
+/* --surface-color: Background of boxed elements within sections, such as cards, icon boxes */
+/* --contrast-color: Contrast color for text, ensuring readability against accent/heading backgrounds */
+:root,
+[data-bs-theme="light"] {
+  --background-color:              #f5f4ff;
+  --default-color:                 #1b1464;
+  --heading-color:                 #1b1464;
+  --accent-color:                  #f7931e;
+  --surface-color:                 #e8e5ff;
+  --contrast-color:                #ffffff;
+
+  /* ==================================
+     Nav Menu Colors
+     --nav-color: Default color of the main navmenu links
+     --nav-hover-color: Applied to navmenu links when hovered over or active
+     --nav-mobile-background-color: Background for mobile navigation menu
+     --nav-dropdown-background-color: Background for dropdown items
+     --nav-dropdown-color: Navigation links of dropdown items
+     --nav-dropdown-hover-color: Dropdown navigation links on hover
+     =================================== */
+  --nav-color:                     #1b1464;
+  --nav-hover-color:               #f7931e;
+  --nav-mobile-background-color:   #1b1464;
+  --nav-dropdown-background-color: #1b1464;
+  --nav-dropdown-color:            #ffffff;
+  --nav-dropdown-hover-color:      #f7931e;
+
+  /* Pattern */
+  --dot-color:  rgba(27, 20, 100, 0.10);
+  --grid-color: rgba(27, 20, 100, 0.05);
+
+  /* Widget tokens */
+  --widget-bg:     rgba(255, 255, 255, 0.82);
+  --widget-border: rgba(255, 255, 255, 0.95);
+  --widget-shadow: rgba(27, 20, 100, 0.10);
+  --widget-text:   #1b1464;
+  --widget-sub:    #888888;
+}
+
+/* ── DARK THEME ─────────────────────────────────────── */
+[data-bs-theme="dark"] {
+  --background-color:              #07061a;
+  --default-color:                 #e0deff;
+  --heading-color:                 #ffffff;
+  --accent-color:                  #f7931e;
+  --surface-color:                 #1b1464;
+  --contrast-color:                #ffffff;
+
+  --nav-color:                     #e0deff;
+  --nav-hover-color:               #f7931e;
+  --nav-mobile-background-color:   #07061a;
+  --nav-dropdown-background-color: #07061a;
+  --nav-dropdown-color:            #e0deff;
+  --nav-dropdown-hover-color:      #f7931e;
+
+  --dot-color:  rgba(247, 147, 30, 0.15);
+  --grid-color: rgba(255, 255, 255, 0.04);
+
+  --widget-bg:     rgba(27, 20, 100, 0.65);
+  --widget-border: rgba(255, 255, 255, 0.10);
+  --widget-shadow: rgba(0, 0, 0, 0.40);
+  --widget-text:   #ffffff;
+  --widget-sub:    rgba(224, 222, 255, 0.65);
+}
+
+/* ════════════════════════════════════════════════════
+   RESET
+════════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--background-color);
+  color: var(--default-color);
+  font-family: var(--default-font);
+  overflow-x: hidden;
+  cursor: none;
+  transition: background-color 0.45s, color 0.45s;
+}
+@media (hover: none) {
+  body { cursor: auto; }
+  #cursor, #cursor-ring { display: none; }
+}
+
+/* ════════════════════════════════════════════════════
+   DOT-GRID PATTERN BACKGROUND
+════════════════════════════════════════════════════ */
+.pattern-bg {
+  position: fixed; inset: 0;
+  z-index: 0; pointer-events: none;
+  background-image:
+    radial-gradient(circle, var(--dot-color) 1.5px, transparent 1.5px),
+    linear-gradient(var(--grid-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+  background-size: 32px 32px, 96px 96px, 96px 96px;
+}
+
+/* ════════════════════════════════════════════════════
+   CURSOR  (desktop only)
+════════════════════════════════════════════════════ */
+#cursor {
+  position: fixed; width: 10px; height: 10px;
+  background: var(--accent-color); border-radius: 50%;
+  pointer-events: none; z-index: 9999;
+  transform: translate(-50%, -50%);
+}
+#cursor-ring {
+  position: fixed; width: 34px; height: 34px;
+  border: 1.5px solid var(--accent-color); border-radius: 50%;
+  pointer-events: none; z-index: 9998;
+  transform: translate(-50%, -50%); opacity: 0.5;
+}
+
+/* ════════════════════════════════════════════════════
+   LOADER
+════════════════════════════════════════════════════ */
+#loader {
+  position: fixed; inset: 0;
+  background: var(--surface-color); z-index: 8000;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 1.2rem;
+}
+.loader-logo {
+  height: clamp(44px, 8vw, 68px);
+  width: auto; object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+[data-bs-theme="light"] .loader-logo { filter: none; }
+.loader-track {
+  width: 170px; height: 2px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 2px; overflow: hidden;
+}
+[data-bs-theme="light"] .loader-track { background: rgba(27,20,100,0.1); }
+.loader-fill { height: 100%; background: var(--accent-color); width: 0%; }
+.loader-num {
+  font-family: var(--nav-font); font-size: 0.68rem;
+  letter-spacing: 0.3em; color: rgba(255,255,255,0.4);
+}
+[data-bs-theme="light"] .loader-num { color: rgba(27,20,100,0.4); }
+
+/* ════════════════════════════════════════════════════
+   NAVBAR
+════════════════════════════════════════════════════ */
+#navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  padding: 1.2rem 3rem;
+  display: flex; align-items: center; justify-content: space-between;
+  opacity: 0; background: transparent;
+  transition: background 0.4s, box-shadow 0.4s, padding 0.3s;
+}
+#navbar.scrolled {
+  background: var(--background-color);
+  box-shadow: 0 2px 28px rgba(0,0,0,0.1);
+  padding-top: 0.7rem; padding-bottom: 0.7rem;
+}
+
+/* Logo */
+.nav-logo img {
+  height: clamp(30px, 4.5vw, 46px);
+  width: auto; display: block; transition: transform 0.3s;
+}
+.nav-logo:hover img { transform: scale(1.04); }
+
+/* Desktop links */
+.nav-links { display: flex; gap: 2.4rem; list-style: none; }
+.nav-links a {
+  font-family: var(--nav-font); color: var(--nav-color);
+  text-decoration: none; font-size: 0.84rem; font-weight: 500;
+  letter-spacing: 0.1em; position: relative; transition: color 0.25s;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -4px; left: 0;
+  width: 0; height: 1.5px; background: var(--accent-color);
+  transition: width 0.35s;
+}
+.nav-links a:hover { color: var(--nav-hover-color); }
+.nav-links a:hover::after { width: 100%; }
+
+/* ── Hamburger ── */
+.hamburger {
+  display: none; flex-direction: column; gap: 5px;
+  background: none; border: none; cursor: none; padding: 4px; z-index: 600;
+}
+.hamburger span {
+  display: block; width: 24px; height: 2px;
+  background: var(--nav-color); border-radius: 2px;
+  transition: transform 0.35s, opacity 0.25s, background 0.3s;
+}
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ── Mobile drawer ── */
+.mobile-nav {
+  position: fixed; top: 0; right: 0; bottom: 0;
+  width: min(78vw, 300px);
+  background: var(--nav-mobile-background-color);
+  z-index: 550; display: flex; flex-direction: column;
+  justify-content: center; align-items: flex-start;
+  padding: 2.5rem 2rem; gap: 2rem;
+  transform: translateX(100%);
+  transition: transform 0.45s cubic-bezier(0.77,0,0.175,1);
+  box-shadow: -8px 0 40px rgba(0,0,0,0.3);
+}
+.mobile-nav.open { transform: translateX(0); }
+.mobile-nav a {
+  font-family: var(--heading-font); font-size: clamp(1.6rem,5vw,2rem);
+  font-weight: 700; color: #fff; text-decoration: none;
+  letter-spacing: 0.06em; transition: color 0.25s;
+}
+.mobile-nav a:hover { color: var(--accent-color); }
+.mobile-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.55);
+  z-index: 540; opacity: 0; pointer-events: none; transition: opacity 0.4s;
+}
+.mobile-overlay.open { opacity: 1; pointer-events: all; }
+
+/* ════════════════════════════════════════════════════
+   HERO
+════════════════════════════════════════════════════ */
+#hero {
+  position: relative; width: 100%; height: 100svh;
+  min-height: 600px; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* Blobs */
+.hero-blob {
+  position: absolute; border-radius: 50%;
+  pointer-events: none; filter: blur(90px); z-index: 1;
+}
+.hero-blob-1 {
+  width: clamp(300px,55vw,700px); height: clamp(300px,55vw,700px);
+  background: radial-gradient(circle, rgba(27,20,100,0.40) 0%, transparent 70%);
+  top: -15%; left: -12%;
+}
+.hero-blob-2 {
+  width: clamp(200px,38vw,500px); height: clamp(200px,38vw,500px);
+  background: radial-gradient(circle, rgba(247,147,30,0.16) 0%, transparent 70%);
+  bottom: -5%; right: 2%;
+}
+
+/* Giant PORTFOLIO title */
+.hero-title-wrap {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 3; pointer-events: none;
+}
+.hero-title {
+  font-family: var(--heading-font); font-weight: 900;
+  font-size: clamp(4.5rem, 16vw, 17rem);
+  line-height: 0.88; color: var(--heading-color);
+  letter-spacing: 0.03em; text-align: center; user-select: none;
+}
+
+/* ── "Creative" script ──
+   Desktop: sits above the PORTFOLIO text, centred
+   The script is z-index 6 so it floats above the big text
+────────────────────────── */
+.hero-script {
+  position: absolute;
+  top: 30%;                          /* above the vertical midpoint */
+  left: 28%;
+  transform: translateX(-50%) rotate(-4deg);
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(2rem, 4.5vw, 5rem);
+  color: var(--accent-color);
+  z-index: 6; pointer-events: none;
+  opacity: 0; white-space: nowrap;
+}
+
+/* Accent ring — centred exactly with photo */
+.photo-ring {
+  position: absolute; bottom: -3%; left: 50%;
+  transform: translateX(-50%);
+  width: clamp(180px, 28vw, 400px); aspect-ratio: 1;
+  border-radius: 50%; border: 1.5px solid var(--accent-color);
+  opacity: 0.12; z-index: 3;
+}
+
+/* ── HEADSHOT — true centre ── */
+.hero-photo {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);          /* perfect centre always */
+  width: clamp(220px, 34vw, 520px);
+  z-index: 4; opacity: 0;
+}
+.hero-photo img { width: 100%; display: block; object-fit: contain; }
+
+/* Decorative SVG shapes */
+.hero-geo { position: absolute; z-index: 2; pointer-events: none; opacity: 0; }
+.hero-geo-tl { top: 10%; left: 4%; width: clamp(44px,5.5vw,80px); }
+.hero-geo-br { bottom: 12%; right: 3%; width: clamp(30px,4vw,58px); }
+
+/* Left accent line */
+.hero-line {
+  position: absolute;
+  left: clamp(1.2rem, 3.5vw, 3.5rem); top: 50%;
+  transform: translateY(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+  z-index: 6; opacity: 0;
+}
+.hero-line-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-color); }
+.hero-line-bar { width: 1px; height: 54px; background: linear-gradient(to bottom, var(--accent-color), transparent); }
+
+/* Bottom-left meta */
+.hero-meta-left {
+  position: absolute;
+  bottom: clamp(1.4rem,3vw,2.6rem);
+  left: clamp(1.2rem,3.5vw,3.5rem);
+  z-index: 6; opacity: 0;
+}
+.hero-meta-left .role {
+  font-family: var(--nav-font);
+  font-size: clamp(0.62rem,1vw,0.85rem);
+  font-weight: 300; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--default-color); opacity: 0.65;
+}
+.hero-meta-left .role::before {
+  content: ''; display: inline-block; width: 22px; height: 1px;
+  background: var(--accent-color); vertical-align: middle; margin-right: 0.6rem;
+}
+
+/* Bottom-right meta */
+.hero-meta-right {
+  position: absolute;
+  bottom: clamp(1.4rem,3vw,2.6rem);
+  right: clamp(1.2rem,3.5vw,3.5rem);
+  z-index: 6; opacity: 0; text-align: right;
+}
+.hero-meta-right .years {
+  font-family: var(--nav-font);
+  font-size: clamp(0.62rem,1vw,0.78rem);
+  letter-spacing: 0.18em; color: var(--default-color); opacity: 0.5;
+}
+
+/* Scroll hint */
+.scroll-hint {
+  position: absolute;
+  right: clamp(1.2rem,3.5vw,3.5rem); top: 50%;
+  transform-origin: center; transform: translateY(-50%) rotate(90deg);
+  font-family: var(--nav-font); font-size: 0.6rem; letter-spacing: 0.3em;
+  color: var(--default-color); opacity: 0; z-index: 6; white-space: nowrap;
+}
+.scroll-hint::after {
+  content: ''; display: inline-block; width: 30px; height: 1px;
+  background: var(--accent-color); vertical-align: middle; margin-left: 0.5rem;
+}
+
+/* Char split */
+.char { display: inline-block; will-change: transform; }
+
+/* ════════════════════════════════════════════════════
+   MOBILE TEXT BLOCK
+   Hidden on desktop — shown only on mobile.
+   Stacks "Creative" (left-aligned) above "PORTFOLIO"
+   (centre-aligned) as a dedicated readable text zone.
+════════════════════════════════════════════════════ */
+.hero-mobile-text {
+  display: none; /* hidden by default — shown via mobile breakpoint */
+  position: absolute;
+  z-index: 6;
+  pointer-events: none;
+  flex-direction: column;
+  align-items: flex-start;    /* left-align the block */
+  width: 100%;
+  padding: 0 1.2rem;
+}
+.hmt-creative {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(2rem, 10vw, 3rem);
+  color: var(--accent-color);
+  line-height: 1;
+  display: block;
+  padding-left: 0.1em;        /* slight indent so it feels left-aligned */
+  transform: rotate(-3deg);
+  transform-origin: left center;
+}
+.hmt-portfolio {
+  font-family: var(--heading-font);
+  font-weight: 900;
+  font-size: clamp(2.8rem, 15.5vw, 6rem);
+  line-height: 0.9;
+  color: var(--heading-color);
+  letter-spacing: 0.02em;
+  display: block;
+  text-align: center;         /* PORTFOLIO centred */
+  width: 100%;
+}
+
+/* ════════════════════════════════════════════════════
+   FLOATING WIDGETS
+   Positioned symmetrically around the centred photo.
+   Photo is at left:50%, width ≈ 34vw  →  half ≈ 17vw.
+   Left-side widgets: right edge at  calc(50% - 17vw - gap)
+   Right-side widgets: left edge at  calc(50% + 17vw + gap)
+════════════════════════════════════════════════════ */
+.hero-widget {
+  position: absolute; z-index: 7; opacity: 0;
+  backdrop-filter: blur(16px) saturate(1.5);
+  -webkit-backdrop-filter: blur(16px) saturate(1.5);
+  border-radius: 16px;
+  font-family: var(--default-font);
+  pointer-events: none; will-change: transform;
+  background: var(--widget-bg);
+  border: 1px solid var(--widget-border);
+  box-shadow: 0 8px 28px var(--widget-shadow), 0 1px 3px rgba(0,0,0,0.04);
+  color: var(--widget-text);
+}
+
+/* ── W1: Prospects — left side, mid ── */
+.w-prospects {
+  /* right edge sits just outside the photo's left edge */
+  right: calc(50% + clamp(80px, 14vw, 200px));
+  top: 50%;
+  transform: translateY(-30%);
+  padding: 1rem 1.15rem;
+  width: clamp(148px, 15vw, 205px);
+}
+.w-prospects .w-title {
+  font-size: clamp(0.95rem, 1.3vw, 1.15rem);
+  font-weight: 700; line-height: 1.1;
+}
+.w-prospects .w-sub {
+  font-size: clamp(0.58rem, 0.75vw, 0.66rem);
+  color: var(--widget-sub); margin: 0.16rem 0 0.55rem;
+}
+.w-progress-track {
+  width: 100%; height: 5px;
+  background: rgba(27,20,100,0.09); border-radius: 99px; overflow: hidden;
+}
+[data-bs-theme="dark"] .w-progress-track { background: rgba(255,255,255,0.11); }
+.w-progress-fill {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, #1b1464, #f7931e);
+  border-radius: 99px;
+}
+
+/* ── W2: Chat reply — right side, mid ── */
+.w-chat {
+  left: calc(50% + clamp(80px, 14vw, 200px));
+  top: 52%;
+  transform: translateY(-20%);
+  padding: 0.85rem 1rem;
+  width: clamp(160px, 16vw, 215px);
+  display: flex; gap: 0.6rem; align-items: flex-start;
+}
+.w-chat-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: linear-gradient(135deg, #f7931e, #1b1464);
+  flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+  font-size: 0.68rem; font-weight: 700; color: #fff;
+}
+.w-chat-body .w-chat-name {
+  font-size: 0.7rem; font-weight: 700;
+  display: flex; align-items: center; gap: 0.25rem;
+}
+.w-chat-body .w-chat-name::before { content: '↩'; font-size: 0.62rem; color: var(--accent-color); }
+.w-chat-body .w-chat-msg {
+  font-size: 0.64rem; color: var(--widget-sub); margin-top: 0.16rem; line-height: 1.4;
+}
+
+/* ── W3: Meetings — left side, bottom ── */
+.w-meetings {
+  right: calc(50% + clamp(50px, 8vw, 120px));
+  bottom: clamp(3.5rem, 8vh, 7rem);
+  padding: 0.8rem 1rem;
+  width: clamp(140px, 13vw, 180px);
+}
+.w-meetings .w-label {
+  font-size: clamp(0.55rem, 0.75vw, 0.63rem);
+  text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--widget-sub); margin-bottom: 0.2rem;
+}
+.w-meetings .w-value {
+  font-size: clamp(0.82rem, 1.1vw, 0.98rem); font-weight: 700;
+  display: flex; align-items: center; gap: 0.35rem;
+}
+.w-cursor-blink {
+  display: inline-block; width: 2px; height: 1em;
+  background: var(--accent-color); border-radius: 1px;
+  animation: blink 1s step-end infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+/* ── W4: Social proof pill — right side, bottom ── */
+.w-social {
+  left: calc(50% + clamp(50px, 8vw, 120px));
+  bottom: clamp(3.5rem, 8vh, 7rem);
+  padding: 0.65rem 0.95rem; border-radius: 99px;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.w-social-avatars { display: flex; }
+.w-social-avatars span {
+  width: 24px; height: 24px; border-radius: 50%;
+  border: 2px solid #fff; display: block; margin-left: -7px;
+}
+.w-social-avatars span:first-child { margin-left: 0; }
+.w-social-avatars span:nth-child(1) { background: #4caf50; }
+.w-social-avatars span:nth-child(2) { background: #2196f3; }
+.w-social-avatars span:nth-child(3) { background: #9c27b0; }
+.w-social-info { display: flex; align-items: center; gap: 0.22rem; }
+.w-social-heart { font-size: 0.85rem; line-height: 1; }
+.w-social-count { font-size: clamp(0.72rem,1vw,0.85rem); font-weight: 700; }
+
+/* ════════════════════════════════════════════════════
+   RESPONSIVE — TABLET  (≤ 991px)
+════════════════════════════════════════════════════ */
+@media (max-width: 991px) {
+  .nav-links   { display: none; }
+  .hamburger   { display: flex; }
+  .hero-line   { display: none; }
+  .scroll-hint { display: none; }
+
+  #navbar { padding: 1.1rem 1.8rem; }
+
+  .hero-title  { font-size: clamp(3.8rem, 18vw, 9rem); }
+  .hero-script { font-size: clamp(1.8rem, 5.5vw, 3.2rem); top: 20%; }
+  .hero-photo  { width: clamp(200px, 52vw, 380px); }
+  .photo-ring  { width: clamp(160px, 44vw, 310px); }
+
+  .w-prospects { right: calc(50% + clamp(60px, 10vw, 140px)); }
+  .w-chat      { left:  calc(50% + clamp(60px, 10vw, 140px)); }
+  .w-meetings  { right: calc(50% + clamp(35px,  6vw,  90px)); }
+  .w-social    { left:  calc(50% + clamp(35px,  6vw,  90px)); }
+}
+
+@media (max-width: 575px) {
+  #navbar { padding: 0.9rem 1.1rem; }
+  .hero-title-wrap { display: none; } 
+  .hero-script     { display: none; } 
+  .photo-ring      { display: none; }
+  .hero-line       { display: none; }
+  .hero-geo-br     { display: none; }
+  .hero-geo-tl     { top: 4%; left: 2%; width: 28px; }
+
+  /* ── Show mobile text block ── */
+  .hero-mobile-text {
+    display: flex;
+    /* sit in the upper portion of the hero — above the photo */
+    top: clamp(4.5rem, 54vh, 15rem);   /* just below navbar */
+    left: 0;
+    right: 0;
+  }
+
+  /* ── Headshot — large, centred, anchored to bottom ── */
+  .hero-photo {
+    width: min(100vw, 370px, 100%);
+    bottom: 0;
+    transform: translateX(-50%);
+    /* CRITICAL: z-index below text block so photo never overlaps text */
+    z-index: 2;
+  }
+
+  /* ── Bottom meta — show small at very bottom ── */
+  .hero-meta-left, .hero-meta-right { display: block; bottom: 0.6rem; }
+  .hero-meta-left  { left: 1rem; }
+  .hero-meta-right { right: 1rem; }
+  .hero-meta-left .role  { font-size: 0.54rem; letter-spacing: 0.16em; opacity: 0.55; }
+  .hero-meta-right .years{ font-size: 0.54rem; opacity: 0.45; }
+
+  /* ══════════════════════════════════════════════
+     MOBILE WIDGET POSITIONS
+     Photo: min(82vw,340px) wide, centred.
+     Photo left edge ≈ 9vw, right edge ≈ 91vw.
+     W1+W3 on left side: left: 1.5vw
+     W2+W4 on right side: right: 1.5vw
+     Width: ~36vw each so they sit tightly beside photo
+  ══════════════════════════════════════════════ */
+
+  /* W1 — Prospects: LEFT upper */
+  .w-prospects {
+    right: auto; top: auto;
+    transform: none;
+    left: 1.5vw;
+    bottom: clamp(9rem, 27vw, 14rem);
+    width: 36vw;
+    max-width: 138px;
+    padding: 0.6rem 0.7rem;
+    border-radius: 12px;
+  }
+
+  /* W3 — Meetings: LEFT lower */
+  .w-meetings {
+    right: auto;
+    transform: none;
+    left: 1.5vw;
+    bottom: clamp(2.8rem, 7vw, 4.5rem);
+    width: 36vw;
+    max-width: 138px;
+    padding: 0.55rem 0.7rem;
+    border-radius: 12px;
+  }
+
+  /* W2 — Chat: RIGHT upper */
+  .w-chat {
+    left: auto; top: auto;
+    transform: none;
+    right: 1.5vw;
+    bottom: clamp(9rem, 27vw, 14rem);
+    width: 36vw;
+    max-width: 138px;
+    padding: 0.6rem 0.7rem;
+    border-radius: 12px;
+    flex-direction: column;
+    gap: 0.28rem;
+  }
+
+  /* W4 — Social: RIGHT lower */
+  .w-social {
+    left: auto;
+    transform: none;
+    right: 1.5vw;
+    bottom: clamp(2.8rem, 7vw, 4.5rem);
+    border-radius: 12px;
+    padding: 0.55rem 0.7rem;
+  }
+
+  /* ── Widget text scaling ── */
+  .w-prospects .w-title         { font-size: 0.78rem; }
+  .w-prospects .w-sub           { font-size: 0.52rem; margin-bottom: 0.35rem; }
+  .w-meetings .w-label          { font-size: 0.5rem; }
+  .w-meetings .w-value          { font-size: 0.74rem; }
+  .w-chat-avatar                { width: 22px; height: 22px; font-size: 0.54rem; }
+  .w-chat-body .w-chat-name     { font-size: 0.56rem; }
+  .w-chat-body .w-chat-msg      { font-size: 0.54rem; }
+  .w-social-count               { font-size: 0.68rem; }
+  .w-social-avatars span        { width: 18px; height: 18px; margin-left: -5px; }
+  .w-social-avatars span:first-child { margin-left: 0; }
+  .w-progress-track             { height: 4px; }
+}

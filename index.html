@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Buana's Art — Creative Graphic Designer Portfolio" />
+  <title>Buana's Art — Creative Portfolio</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,300;0,700;0,900;1,700&family=Raleway:wght@300;400;500;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+  <!-- CURSOR -->
+  <div id="cursor"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- DOT-GRID PATTERN -->
+  <div class="pattern-bg" aria-hidden="true"></div>
+
+  <!-- LOADER -->
+  <div id="loader" role="status" aria-label="Loading">
+    <img src="assets/img/buana-wordmark.png" alt="Buana's Art" class="loader-logo" />
+    <div class="loader-track">
+      <div class="loader-fill" id="loaderFill"></div>
+    </div>
+    <div class="loader-num" id="loaderNum" aria-live="polite">0%</div>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav id="navbar" aria-label="Main navigation">
+    <a href="#" class="nav-logo" aria-label="Buana's Art — Home">
+      <img src="assets/img/buana-wordmark.png" alt="Buana's Art logo" />
+    </a>
+
+    <ul class="nav-links" role="list">
+      <li><a href="#about">About Me</a></li>
+      <li><a href="#works">My Works</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+
+    <!-- hamburger (mobile only) -->
+    <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- MOBILE DRAWER -->
+  <div class="mobile-overlay" id="mobileOverlay" aria-hidden="true"></div>
+  <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+    <a href="#about">About Me</a>
+    <a href="#works">My Works</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <!-- ═══════════ HERO ═══════════ -->
+  <section id="hero" aria-label="Hero">
+
+    <div class="hero-blob hero-blob-1" aria-hidden="true"></div>
+    <div class="hero-blob hero-blob-2" aria-hidden="true"></div>
+
+    <!-- Decorative shapes -->
+    <svg class="hero-geo hero-geo-tl" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <rect x="2"  y="2"  width="96" height="96" stroke="#f7931e" stroke-width="2"  opacity=".35"/>
+      <rect x="16" y="16" width="68" height="68" stroke="#f7931e" stroke-width="1"  opacity=".18"/>
+    </svg>
+    <svg class="hero-geo hero-geo-br" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <polygon points="40,2 78,78 2,78" stroke="#f7931e" stroke-width="2" opacity=".28"/>
+    </svg>
+
+    <!-- Giant PORTFOLIO text -->
+    <div class="hero-title-wrap" aria-hidden="true">
+      <h1 class="hero-title" id="heroTitle">PORTFOLIO</h1>
+    </div>
+
+    <!-- "Creative" script — floats above headshot (desktop) -->
+    <div class="hero-script" id="heroScript" aria-hidden="true">Creative</div>
+
+    <!-- MOBILE TEXT BLOCK — sits above photo, hidden on desktop -->
+    <div class="hero-mobile-text" id="heroMobileText" aria-hidden="true">
+      <span class="hmt-creative">Creative</span>
+      <span class="hmt-portfolio">PORTFOLIO</span>
+    </div>
+
+    <!-- Accent ring -->
+    <div class="photo-ring" id="photoRing" aria-hidden="true"></div>
+
+    <!-- HEADSHOT — centred -->
+    <div class="hero-photo" id="heroPhoto">
+      <img src="assets/img/headshot.png" alt="Buana — Graphic Designer" />
+    </div>
+
+    <!-- Left accent line (desktop) -->
+    <div class="hero-line" id="heroLine" aria-hidden="true">
+      <div class="hero-line-dot"></div>
+      <div class="hero-line-bar"></div>
+    </div>
+
+    <!-- Bottom-left label -->
+    <div class="hero-meta-left" id="heroMetaLeft">
+      <p class="role">Graphic Designer</p>
+    </div>
+
+    <!-- Bottom-right label -->
+    <div class="hero-meta-right" id="heroMetaRight">
+      <p class="years">2020 — Till Date</p>
+    </div>
+
+    <!-- Scroll hint (desktop) -->
+    <div class="scroll-hint" id="scrollHint" aria-hidden="true">Scroll Down</div>
+
+    <!-- ── FLOATING WIDGETS ── -->
+
+    <!-- W1: Prospects (left, mid) -->
+    <div class="hero-widget w-prospects" id="w1" aria-hidden="true">
+      <div class="w-title">180 prospects</div>
+      <div class="w-sub">Reached this week</div>
+      <div class="w-progress-track">
+        <div class="w-progress-fill" id="wProgressFill"></div>
+      </div>
+    </div>
+
+    <!-- W2: Chat reply (right, mid) -->
+    <div class="hero-widget w-chat" id="w2" aria-hidden="true">
+      <div class="w-chat-avatar">D</div>
+      <div class="w-chat-body">
+        <div class="w-chat-name">Daniel replied</div>
+        <div class="w-chat-msg">Sounds good, let's schedule a meeting for tomorrow</div>
+      </div>
+    </div>
+
+    <!-- W3: Meetings booked (left, bottom) -->
+    <div class="hero-widget w-meetings" id="w3" aria-hidden="true">
+      <div class="w-label">Meetings booked</div>
+      <div class="w-value">8 meetings <span class="w-cursor-blink"></span></div>
+    </div>
+
+    <!-- W4: Social proof pill (right, bottom) -->
+    <div class="hero-widget w-social" id="w4" aria-hidden="true">
+      <div class="w-social-avatars">
+        <span></span><span></span><span></span>
+      </div>
+      <div class="w-social-info">
+        <span class="w-social-heart">🧡</span>
+        <span class="w-social-count">12k+</span>
+      </div>
+    </div>
+
+  </section>
+  <!-- future sections go here -->
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
