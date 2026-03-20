@@ -535,9 +535,15 @@ body {
 
   .hero-title  { font-size: clamp(3.8rem, 18vw, 9rem); }
   .hero-script { font-size: clamp(1.8rem, 5.5vw, 3.2rem); top: 20%; }
-  .hero-photo  { width: clamp(200px, 52vw, 380px); }
+  .hero-photo  { width: clamp(200px, 52vw, 380px); position: absolute; z-index: 9;}
   .photo-ring  { width: clamp(160px, 44vw, 310px); }
-
+  .hero-mobile-text {
+    display: flex;
+    /* sit in the upper portion of the hero — above the photo */
+    top: clamp(5.5rem, 34vh, 7rem);   /* just below navbar */
+    left: 0;
+    right: 0;
+  }
   .w-prospects { right: calc(50% + clamp(60px, 10vw, 140px)); }
   .w-chat      { left:  calc(50% + clamp(60px, 10vw, 140px)); }
   .w-meetings  { right: calc(50% + clamp(35px,  6vw,  90px)); }
@@ -557,18 +563,18 @@ body {
   .hero-mobile-text {
     display: flex;
     /* sit in the upper portion of the hero — above the photo */
-    top: clamp(4.5rem, 54vh, 15rem);   /* just below navbar */
+    top: clamp(1.5rem, 14vh, 9rem);   /* just below navbar */
     left: 0;
     right: 0;
   }
 
   /* ── Headshot — large, centred, anchored to bottom ── */
   .hero-photo {
-    width: min(100vw, 370px, 100%);
+    width: min(100vw, 340px, 100%);
     bottom: 0;
     transform: translateX(-50%);
     /* CRITICAL: z-index below text block so photo never overlaps text */
-    z-index: 2;
+    z-index: 6;
   }
 
   /* ── Bottom meta — show small at very bottom ── */
