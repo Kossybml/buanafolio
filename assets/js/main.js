@@ -235,3 +235,230 @@ if (hamburger) hamburger.addEventListener('click', () =>
 );
 if (mobileOverlay) mobileOverlay.addEventListener('click', closeMenu);
 document.querySelectorAll('.mobile-nav a').forEach(a => a.addEventListener('click', closeMenu));
+
+
+/* ════════════════════════════════════════════════════
+   13. HERO → ABOUT PHOTO TRANSITION
+   ─────────────────────────────────────────────────
+   Stacking context solution:
+   • .about-section has position:relative but NO z-index
+     → it does NOT create a stacking context
+   • Cards (#aboutCards) are position:absolute inside
+     .about-section → they live in the ROOT stacking ctx
+   • Clone is position:fixed z-index:4 (root ctx too)
+   • Cards get z-index:9999 → always beat the clone
+   • Cards are positioned by JS (measuring aboutLeft rect)
+════════════════════════════════════════════════════ */
+(function () {
+
+  const isMobile = () => window.innerWidth <= 768;
+
+  const heroPhotoEl  = document.getElementById('heroPhoto');
+  const heroPhotoImg = heroPhotoEl?.querySelector('img');
+  const aboutSection = document.getElementById('about');
+  const aboutLeft    = document.getElementById('aboutLeft');
+  const aboutFrame   = document.getElementById('aboutFrame');
+  const aboutTarget  = document.getElementById('aboutPhotoTarget');
+  const framePhoto   = document.getElementById('aboutFramePhoto');
+  const cards        = document.getElementById('aboutCards');
+
+  if (!heroPhotoEl || !heroPhotoImg || !aboutFrame || !aboutTarget ||
+      !framePhoto || !cards || !aboutLeft || !aboutSection) return;
+
+  /* ── Position cards over the right portion of aboutLeft ──
+     Called on load + resize so it always tracks layout.      */
+  function positionCards() {
+    const sectionR = aboutSection.getBoundingClientRect();
+    const leftR    = aboutLeft.getBoundingClientRect();
+
+    /* Cards sit in the right 55% of the left column,
+       vertically centred. Coords relative to section.  */
+    const cardWidth  = leftR.width * 0.55;
+    const cardRight  = (sectionR.right - leftR.right) + 0;   /* flush to left col right edge */
+    const cardTop    = (leftR.top - sectionR.top) + leftR.height * 0.22;
+
+    Object.assign(cards.style, {
+      width:  cardWidth + 'px',
+      right:  (window.innerWidth - leftR.right) + 'px',
+      top:    (leftR.top + window.scrollY) + leftR.height * 0.22 + 'px',
+      left:   'auto'
+    });
+  }
+
+  /* Use fixed positioning for cards so they're truly
+     outside every stacking context during scroll       */
+  function makeCardsFixed() {
+    const leftR   = aboutLeft.getBoundingClientRect();
+    const cardW   = leftR.width * 0.55;
+    Object.assign(cards.style, {
+      position: 'fixed',
+      zIndex:   '9999',
+      width:    cardW + 'px',
+      right:    (window.innerWidth - leftR.right) + 'px',
+      top:      leftR.top + leftR.height * 0.22 + 'px',
+      left:     'auto',
+      bottom:   'auto'
+    });
+  }
+
+  /* ── Flying clone ── */
+  const clone = document.createElement('img');
+  clone.src = heroPhotoImg.src;
+  clone.alt = '';
+  clone.setAttribute('aria-hidden', 'true');
+  clone.id = 'photoClone';
+  Object.assign(clone.style, {
+    position:       'fixed',
+    top:            '0', left: '0',
+    pointerEvents:  'none',
+    zIndex:         '4',          /* root ctx — cards at 9999 always win */
+    objectFit:      'cover',
+    objectPosition: 'top center',
+    borderRadius:   '0 0 0 0',
+    opacity:        '0',
+    display:        'block'
+  });
+  document.body.appendChild(clone);
+
+  const R = el => el.getBoundingClientRect();
+
+  /* ── ScrollTrigger ── */
+  let st = null;
+
+  function build() {
+    if (st) { st.kill(); st = null; }
+    makeCardsFixed();
+
+    if (isMobile()) { mobileFallback(); return; }
+
+    st = ScrollTrigger.create({
+      trigger: '#about',
+      start:   'top 85%',
+      end:     'top 5%',
+      scrub:   1,
+
+      onUpdate(self) {
+        const p  = self.progress;
+        const sR = R(heroPhotoEl);
+        const eR = R(aboutTarget);
+
+        /* Interpolate clone from hero → frame interior */
+        Object.assign(clone.style, {
+          left:         gsap.utils.interpolate(sR.left,   eR.left,   p) + 'px',
+          top:          gsap.utils.interpolate(sR.top,    eR.top,    p) + 'px',
+          height:       gsap.utils.interpolate(sR.height, eR.height, p) + 'px',
+          borderRadius: `${gsap.utils.interpolate(0, 24, p)}px ${gsap.utils.interpolate(0, 24, p)}px 0 0`,
+          opacity:      p > 0.01 ? '1' : '0'
+        });
+
+        /* Hero original fades out as clone appears */
+        heroPhotoEl.style.opacity = p > 0.02 ? '0' : '1';
+
+        /* Orange frame scales in */
+        const fp = Math.min(p * 2, 1);
+        gsap.set(aboutFrame, {
+          opacity: fp,
+          scaleX:  0.4 + fp * 0.6,
+          scaleY:  0.5 + fp * 0.5,
+          transformOrigin: 'left bottom'
+        });
+
+        /* Reposition fixed cards to follow layout on scroll */
+        const lR = R(aboutLeft);
+        const cW = lR.width * 0.55;
+        Object.assign(cards.style, {
+          width: cW + 'px',
+          right: (window.innerWidth - lR.right) + 'px',
+          top:   lR.top + lR.height * 0.22 + 'px'
+        });
+
+        /* Reveal cards when photo is mostly landed */
+        if (p > 0.75 && cards.dataset.shown !== '1') showCards();
+        if (p < 0.6  && cards.dataset.shown === '1') hideCards();
+      },
+
+      onLeave() {
+        gsap.to(framePhoto, {
+          opacity: 1, duration: 0.2,
+          onComplete: () => { clone.style.opacity = '0'; }
+        });
+        showCards();
+      },
+
+      onEnterBack() {
+        clone.style.opacity   = '1';
+        framePhoto.style.opacity = '0';
+        hideCards();
+      },
+
+      onLeaveBack() {
+        clone.style.opacity   = '0';
+        heroPhotoEl.style.opacity = '1';
+        framePhoto.style.opacity  = '0';
+        gsap.set(aboutFrame, { opacity: 0, scaleX: 0.4, scaleY: 0.5 });
+        hideCards();
+      }
+    });
+  }
+
+  /* ── Show / hide cards ── */
+  function showCards() {
+    if (cards.dataset.shown === '1') return;
+    cards.dataset.shown = '1';
+    gsap.to(['#ac1','#ac2'], {
+      opacity: 1, x: 0, duration: 0.5, stagger: 0.12, ease: 'back.out(1.5)'
+    });
+    gsap.to('#aboutHeading', { opacity: 1, x: 0, duration: 0.55, ease: 'power3.out', delay: 0.08 });
+    gsap.to('#aboutBody',    { opacity: 1, x: 0, duration: 0.55, ease: 'power3.out', delay: 0.18 });
+    gsap.to('#aboutCta',     { opacity: 1, x: 0, duration: 0.45, ease: 'power3.out', delay: 0.28 });
+  }
+  function hideCards() {
+    cards.dataset.shown = '0';
+    gsap.set(['#ac1','#ac2'], { opacity: 0, x: 40 });
+    gsap.set(['#aboutHeading','#aboutBody','#aboutCta'], { opacity: 0, x: 45 });
+  }
+
+  /* ── Mobile fallback ── */
+  function mobileFallback() {
+    /* On mobile put cards back in normal flow */
+    Object.assign(cards.style, {
+      position: 'absolute', zIndex: '9999',
+      width: '', right: '', top: '', left: '', bottom: ''
+    });
+    ScrollTrigger.create({
+      trigger: '#about', start: 'top 75%',
+      toggleActions: 'play none none reverse',
+      onEnter() {
+        gsap.to(aboutFrame,  { opacity: 1, scale: 1, duration: 0.7, ease: 'power2.out', transformOrigin: 'left bottom' });
+        gsap.to(framePhoto,  { opacity: 1, duration: 0.5, delay: 0.3 });
+        gsap.to(['#ac1','#ac2'], { opacity: 1, x: 0, duration: 0.5, stagger: 0.1, ease: 'back.out(1.4)', delay: 0.35 });
+        gsap.to('#aboutHeading', { opacity: 1, x: 0, duration: 0.55, delay: 0.2 });
+        gsap.to('#aboutBody',    { opacity: 1, x: 0, duration: 0.55, delay: 0.3 });
+        gsap.to('#aboutCta',     { opacity: 1, x: 0, duration: 0.45, delay: 0.42 });
+      }
+    });
+    gsap.set(aboutFrame, { opacity: 0, scale: 0.88, transformOrigin: 'left bottom' });
+  }
+
+  /* ── Boot ── */
+  window.addEventListener('load', () => {
+    gsap.set(['#ac1','#ac2'], { opacity: 0, x: 40 });
+    setTimeout(build, 300);
+  });
+  window.addEventListener('resize', () => {
+    clearTimeout(window._rTimer);
+    window._rTimer = setTimeout(build, 250);
+  });
+
+  /* ── Perpetual card float (starts after reveal) ── */
+  ['#ac1','#ac2'].forEach((id, i) => {
+    gsap.to(id, {
+      y: `+=${6 + i * 3}`,
+      yoyo: true, repeat: -1,
+      duration: 2.6 + i * 0.4,
+      delay: 1 + i * 0.2,
+      ease: 'sine.inOut'
+    });
+  });
+
+})();

@@ -657,3 +657,277 @@ body {
   .w-social-avatars span:first-child { margin-left: 0; }
   .w-progress-track             { height: 4px; }
 }
+
+ 
+/* ════════════════════════════════════════════════════
+   ABOUT SECTION
+   Matches reference exactly:
+   • Full-width section, light bg
+   • Left col: orange rounded rect frame, photo
+     bleeding over top+left, cards floating right
+   • Right col: heading + body + CTA link
+════════════════════════════════════════════════════ */
+ 
+.about-section {
+  background-color: var(--background-color);
+  padding: clamp(5rem, 10vh, 8rem) clamp(1.5rem, 6vw, 6rem);
+  overflow: visible;         /* must NOT be hidden — clip would trap the fixed clone */
+  position: relative;
+  /* NO z-index here — avoids creating a stacking context that
+     would trap cards below the fixed-position clone            */
+}
+ 
+/* Two-column grid */
+.about-inner {
+  max-width: 1300px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 52% 1fr;
+  gap: clamp(3rem, 6vw, 7rem);
+  align-items: center;
+}
+ 
+/* ════════════════
+   LEFT COLUMN
+════════════════ */
+.about-left {
+  position: relative;
+  height: clamp(480px, 58vw, 680px);
+  /* NO z-index — avoids stacking context that would trap cards */
+  isolation: auto;
+}
+ 
+/* ── Orange frame ──
+   Pure background shape. No overflow clip — the photo
+   lands IN FRONT of this, bleeding over its edges.    */
+.about-frame {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 75%;
+  height: 90%;
+  background: var(--accent-color);
+  border-radius: 32px;
+  overflow: visible;          /* photo bleeds over edges — no clipping */
+  z-index: 1;                 /* behind photo (z:3) and cards (z:9999) */
+  opacity: 0;
+  transform-origin: left bottom;
+  box-shadow: 0 20px 60px rgba(247, 147, 30, 0.25);
+}
+ 
+/* ── Static frame photo ──
+   Sits IN FRONT of the orange frame (z:3).
+   Revealed when flying clone finishes landing.
+   Bleeds above the frame's top edge.              */
+.about-frame-photo {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;                 /* narrower than the frame so frame peeks right */
+  height: 110%;               /* bleeds above frame top */
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  z-index: 3;                 /* in front of orange frame (z:1) */
+  opacity: 0;                 /* GSAP reveals on landing */
+  border-radius: 32px;
+}
+ 
+/* ── Photo landing target ──
+   Matches .about-frame-photo's exact position/size.
+   Clone flies here — GSAP reads its getBoundingClientRect(). */
+.about-photo-target {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 65%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 3;
+}
+ 
+/* ── Cards — positioned by JS over the left column ──
+   Parent is .about-section (position:relative, NO z-index).
+   Clone is position:fixed z-index:4.
+   Cards are position:absolute z-index:9999 → always wins.  */
+.about-cards {
+  position: absolute;        /* relative to .about-section */
+  z-index: 9999;             /* beats fixed clone (z:4) at root stacking context */
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  /* JS sets top/right/width via inline style after measuring aboutLeft */
+  pointer-events: none;      /* don't block scroll during transition */
+}
+ 
+.about-card {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 14px;
+  padding: 0.85rem 1.1rem;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.09);
+  border: 1px solid rgba(255, 255, 255, 1);
+  opacity: 0;
+  transform: translateX(40px);
+}
+[data-bs-theme="dark"] .about-card {
+  background: rgba(14, 11, 42, 0.88);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.4);
+}
+ 
+/* ── Duo card (Growth + Earn merged) ── */
+.about-card--duo {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+  padding: 0;
+  overflow: hidden;
+}
+.ac-duo-row {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.75rem 1.1rem;
+}
+.ac-divider {
+  height: 1px;
+  background: rgba(27, 20, 100, 0.08);
+  margin: 0 1.1rem;
+}
+[data-bs-theme="dark"] .ac-divider {
+  background: rgba(255, 255, 255, 0.08);
+}
+ 
+.ac-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--accent-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.ac-icon i {
+  font-size: 1.15rem;
+  color: #fff;
+}
+ 
+.ac-body { display: flex; flex-direction: column; gap: 0.15rem; }
+.ac-title {
+  font-family: var(--heading-font);
+  font-weight: 700;
+  font-size: clamp(0.92rem, 1.2vw, 1.05rem);
+  color: var(--heading-color);
+  margin: 0; line-height: 1.1;
+}
+[data-bs-theme="dark"] .ac-title { color: #fff; }
+.ac-sub {
+  font-family: var(--default-font);
+  font-size: clamp(0.6rem, 0.82vw, 0.72rem);
+  color: #888;
+  margin: 0; line-height: 1.3;
+}
+[data-bs-theme="dark"] .ac-sub { color: rgba(224, 222, 255, 0.58); }
+ 
+/* ════════════════
+   RIGHT COLUMN
+════════════════ */
+.about-right {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.1rem, 2.2vw, 1.7rem);
+}
+ 
+.about-heading {
+  font-family: var(--heading-font);
+  font-weight: 900;
+  font-size: clamp(2.4rem, 4.2vw, 4.2rem);
+  line-height: 1.0;
+  color: var(--heading-color);
+  opacity: 0; transform: translateX(45px); /* GSAP start */
+}
+ 
+.about-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  opacity: 0; transform: translateX(45px); /* GSAP start */
+}
+.about-body p {
+  font-family: var(--default-font);
+  font-size: clamp(0.88rem, 1.05vw, 1rem);
+  line-height: 1.78;
+  color: var(--default-color);
+  opacity: 0.85;
+  margin: 0;
+}
+ 
+.about-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--nav-font);
+  font-size: clamp(0.78rem, 0.95vw, 0.88rem);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-color);
+  text-decoration: none;
+  width: fit-content;
+  opacity: 0; transform: translateX(35px); /* GSAP start */
+  transition: gap 0.3s, color 0.25s;
+}
+.about-cta i { transition: transform 0.3s; }
+.about-cta:hover { color: var(--heading-color); gap: 0.9rem; }
+.about-cta:hover i { transform: translateX(4px); }
+ 
+/* ════════════════════════════════════════════════════
+   ABOUT — RESPONSIVE
+════════════════════════════════════════════════════ */
+@media (max-width: 991px) {
+  .about-inner {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  .about-left {
+    height: clamp(380px, 90vw, 540px);
+  }
+  .about-frame { width: 78%; height: 86%; left: 0; }
+  .about-cards { width: 58%; }
+  .about-heading { font-size: clamp(2.2rem, 5.5vw, 3.2rem); }
+}
+ 
+@media (max-width: 575px) {
+  .about-section {
+    padding: 3.5rem 1rem 4rem;
+  }
+  .about-inner { gap: 2.2rem; }
+  .about-left {
+    height: clamp(320px, 105vw, 440px);
+  }
+  .about-frame {
+    width: 80%;
+    height: 85%;
+    border-radius: 22px;
+    left: 0; bottom: 0;
+  }
+  .about-cards {
+    width: 60%;
+    gap: 0.55rem;
+  }
+  .about-card {
+    padding: 0.65rem 0.75rem;
+    gap: 0.6rem;
+    border-radius: 10px;
+  }
+  .ac-icon { width: 34px; height: 34px; }
+  .ac-icon i { font-size: 0.9rem; }
+  .ac-title { font-size: 0.82rem; }
+  .ac-sub   { font-size: 0.56rem; }
+  .about-heading { font-size: clamp(1.9rem, 7vw, 2.5rem); }
+  .about-body p  { font-size: 0.88rem; }
+}
