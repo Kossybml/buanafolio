@@ -230,10 +230,10 @@ function closeMenu() {
   document.body.style.overflow = '';
 }
 
-if (hamburger) {
-  hamburger.addEventListener('click', () => toggleMenu(!hamburger.classList.contains('open')));
-}
-if (mobileOverlay) {
-  mobileOverlay.addEventListener('click', () => toggleMenu(false));
-}
-document.querySelectorAll('.mobile-nav a').forEach(a => a.addEventListener('click', () => toggleMenu(false)));
+if (hamburger) hamburger.addEventListener('click', () =>
+  hamburger.classList.contains('open') ? closeMenu() : openMenu()
+);
+if (mobileOverlay) mobileOverlay.addEventListener('click', closeMenu);
+document.querySelectorAll('.mobile-nav a').forEach(a => a.addEventListener('click', closeMenu));
+
+;
