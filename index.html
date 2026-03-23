@@ -3,9 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Buana's Art — Creative Graphic Designer Portfolio" />
-  <title>Buana's Art — Creative Portfolio</title>
-
+  <meta name="description" content="Buana's Art — Award-winning graphic designer specializing in branding, digital design, and creative visual storytelling. Explore my portfolio." />
+  <meta name="keywords" content="graphic designer, branding, visual design, portfolio, creative design" />
+  <meta name="author" content="Buana" />
+  <title>Buana's Art — Graphic Designer Portfolio | Creative Design Studio</title>
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/img/buana-logo.png" />
+  <link rel="shortcut icon" href="assets/img/buana-logo.png.png" />
+  <!-- Open Graph / Social Media -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="" />
+  <meta property="og:title" content="Buana's Art — Creative Graphic Designer" />
+  <meta property="og:description" content="Award-winning graphic designer specializing in branding and digital design. View my creative portfolio." />
+  <meta property="og:image" content="/assets/img/og-banner.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <!-- Twitter Card -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:title" content="Buana's Art — Creative Graphic Designer" />
+  <meta property="twitter:description" content="Award-winning graphic designer specializing in branding and digital design." />
+  <meta property="twitter:image" content="/assets/img/og-banner.png" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -59,18 +76,11 @@
 
   <!-- ═══════════ HERO ═══════════ -->
   <section id="hero" aria-label="Hero">
-
     <div class="hero-blob hero-blob-1" aria-hidden="true"></div>
     <div class="hero-blob hero-blob-2" aria-hidden="true"></div>
-
     <!-- Decorative shapes -->
-    <svg class="hero-geo hero-geo-tl" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <rect x="2"  y="2"  width="96" height="96" stroke="#f7931e" stroke-width="2"  opacity=".35"/>
-      <rect x="16" y="16" width="68" height="68" stroke="#f7931e" stroke-width="1"  opacity=".18"/>
-    </svg>
-    <svg class="hero-geo hero-geo-br" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <polygon points="40,2 78,78 2,78" stroke="#f7931e" stroke-width="2" opacity=".28"/>
-    </svg>
+    <svg class="hero-geo hero-geo-tl" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="2"  y="2"  width="96" height="96" stroke="#f7931e" stroke-width="2"  opacity=".35"/><rect x="16" y="16" width="68" height="68" stroke="#f7931e" stroke-width="1"  opacity=".18"/></svg>
+    <svg class="hero-geo hero-geo-br" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polygon points="40,2 78,78 2,78" stroke="#f7931e" stroke-width="2" opacity=".28"/></svg>
 
     <!-- Giant PORTFOLIO text -->
     <div class="hero-title-wrap" aria-hidden="true">
@@ -151,86 +161,7 @@
         <span class="w-social-count">12k+</span>
       </div>
     </div>
-
   </section>
-  <!-- future sections go here -->
-   
-  
-  <!-- ═══════════════════════════════════════════════════
-       ABOUT — WHY BUANA'S ART?
-       Photo bleeds over orange frame (top + left).
-       3 white cards float over frame's right edge.
-       Text content fills the right column.
-  ═══════════════════════════════════════════════════ -->
-  <section id="about" class="about-section">
-    <div class="about-inner">
- 
-      <!-- LEFT: orange frame + cards -->
-      <!-- The hero headshot flies INTO this frame on scroll via GSAP -->
-      <div class="about-left" id="aboutLeft">
- 
-        <!-- solid orange rounded background — clips photo inside it -->
-        <div class="about-frame" id="aboutFrame">
-          <!-- static photo inside frame, revealed when clone lands -->
-          <img src="assets/img/headshot.png"
-               alt="Buana — Graphic Designer"
-               class="about-frame-photo"
-               id="aboutFramePhoto" />
-          <!-- landing target: gives GSAP the clip-box coords -->
-          <div class="about-photo-target" id="aboutPhotoTarget"></div>
-        </div>
- 
-        <!-- cards stack to the right of / over the frame -->
-        <div class="about-cards d-none d-md-block" id="aboutCards">
- 
-          <!-- Card 1: Access -->
-          <div class="about-card" id="ac1">
-            <div class="ac-icon"><i class="bi bi-person-check-fill"></i></div>
-            <div class="ac-body">
-              <p class="ac-title">Access</p>
-              <p class="ac-sub">We are granted safe access</p>
-            </div>
-          </div>
- 
-          <!-- Card 2: Growth + Earn merged -->
-          <div class="about-card about-card--duo" id="ac2">
-            <div class="ac-duo-row">
-              <div class="ac-icon"><i class="bi bi-graph-up-arrow"></i></div>
-              <div class="ac-body">
-                <p class="ac-title">Growth</p>
-                <p class="ac-sub">Growing your digital presence</p>
-              </div>
-            </div>
-            <div class="ac-divider"></div>
-            <div class="ac-duo-row">
-              <div class="ac-icon"><i class="bi bi-currency-dollar"></i></div>
-              <div class="ac-body">
-                <p class="ac-title">Earn</p>
-                <p class="ac-sub">Your Brand will start earning</p>
-              </div>
-            </div>
-          </div>
- 
-        </div>
- 
-      </div>
- 
-      <!-- RIGHT: text -->
-      <div class="about-right" id="aboutRight">
-        <h2 class="about-heading" id="aboutHeading">Why Buana's Art?</h2>
-        <div class="about-body" id="aboutBody">
-          <p>I am a highly creative graphic designer with a track record of proven results — helping brands grow their digital presence with purposeful, strategic visual design.</p>
-          <p>I invest deeply in understanding your brand identity, target audience, and goals — crafting designs that aren't just beautiful, but built to communicate and convert.</p>
-          <p>From brand identity to social content, I aim at building brands from scratch and making their presence relevant and impactful in every space they occupy.</p>
-        </div>
-        <a href="#contact" class="about-cta" id="aboutCta">
-          REACH ME NOW <i class="bi bi-arrow-right"></i>
-        </a>
-      </div>
- 
-    </div>
-  </section>
-
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
