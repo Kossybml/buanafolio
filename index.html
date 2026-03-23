@@ -24,6 +24,8 @@
   <meta property="twitter:description" content="Award-winning graphic designer specializing in branding and digital design." />
   <meta property="twitter:image" content="/assets/img/og-banner.png" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -162,9 +164,128 @@
       </div>
     </div>
   </section>
+  <section class="testimonial-section py-5">
+    <div class="container text-center">
+      
+      <p class="small text-uppercase text-muted mb-2">Testimonials</p>
+      <h2 class="fw-bold mb-5">Our Clients Say...</h2>
+
+      <div class="owl-carousel testimonial-carousel">
+        
+        <!-- Item 1 -->
+        <div class="testimonial-item">
+          <p class="testimonial-text">
+            It’s your full setup i used for the project, Mic, batteries, in-ear monitors and soundcard 100% Fire!!! Sharp!
+          </p>
+          <div class="testimonial-user mt-4">
+            <img src="assets/img/avatar.png" class="avatar-img">
+            <span>Sophie Onyinyechi</span>
+          </div>
+        </div>
+
+        <!-- Item 2 -->
+        <div class="testimonial-item">
+          <p class="testimonial-text">
+            This is way better than the microphone and microphone stand I got before, I'm just sad I didn't find this sooner. Authenticity 100%
+          </p>
+          <div class="testimonial-user mt-4">
+            <img src="assets/img/avatar2.png" class="avatar-img">
+            <span>Sophie Onyinyechi</span>
+          </div>
+        </div>
+
+        <!-- Item 3 -->
+        <div class="testimonial-item">
+          <p class="testimonial-text">
+            This Soundcard Sweet me ehhhh, tiktok will be tired of me...thank you so much Gwen your customer service is amazing!
+          </p>
+          <div class="testimonial-user mt-4">
+            <img src="assets/img/avatar3.png" class="avatar-img">
+            <span>Zinnia</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer id="footer" class="footer">
+    <div class="container">
+    <div class="row pt-5">
+      <div class="col-lg-7">
+        
+        <p class="mb-0 display-1 lwt d-flex align-items-center gap-2 flex-wrap">
+          <img src="/assets/img/buana.png" alt="icon" class=" rounded-4 responsive-icon" width="60" height="60">
+          Let's work
+        </p>
+        <span class="display-1 lwt mb-2 aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">together</span>
+      </div>
+      <div class="col-lg-5 text-md-end pb-4 aos-init aos-animate" data-aos="fade-left" data-aos-delay="300">
+        <p class="fs-1 lwt mb-0">Say Connect ;)</p>
+        <a href="mailto:contact@bmlgraphicsweb.com" class="fs-4">onisobuana@gmail.com</a>
+        <p class="lead">We are not just a Design Agency, we are originally branded to deliver high end quality designs.</p>
+      </div>
+      <hr>
+    </div>
+    </div>
+    <div class="py-4">
+      <div class="container">
+        <div class="row justify-content-center align-items-center pb-5 mb-3">
+          <div class="col-7">
+            <div class="row">
+              <div class="col-12 col-md-4 mb-4 mb-md-0">
+                <span class="small italic">COPYRIGHT</span>
+                <p class="mb-0 fs-6">2026 © All right reserved</p>
+              </div>
+              <div class="col-12 col-md-4 mb-4 mb-md-0">
+                <span class="small italic">DESIGNED BY</span> <br>
+                <a href="" class="mb-0 fs-6" aria-label="">BML Graphic &amp; Web</a>
+              </div>
+              <div class=" col-12 col-md-4 mb-4 mb-md-0">
+                <span class="small italic">OTHERS</span>
+                <div class="d-block d-lg-flex justify-content-lg-between">
+                  <a href="" class="mb-0 fs-6" aria-label="">Package ↗</a> <br>
+                  <a href="" class="mb-0 fs-6" aria-label="">Brand Identity ↗</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-5 ">
+            <div class="d-flex justify-content-lg-end flex-wrap gap-2">
+              <a href="" class="social-icon" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+              <a href="" class="social-icon" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+              <a href="https://wa.me/2348130626529" class="social-icon" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+              <a href="https://www.tiktok.com/@buanas.art" class="social-icon" aria-label="TikTok"><i class="bi bi-tiktok"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+  <script>
+    $('.testimonial-carousel').owlCarousel({
+      loop: true,
+      margin: 20,
+      nav: false,
+      dots: true,
+      autoplay: true,
+      autoplayTimeout: 5000,
+      responsive: {
+        0: {
+          items: 1
+        },
+        768: {
+          items: 2
+        },
+        992: {
+          items: 3
+        }
+      }
+    });
+  </script>
   <script src="assets/js/main.js"></script>
 </body>
 </html>
