@@ -108,7 +108,8 @@ body {
   background-color: var(--background-color);
   color: var(--default-color);
   font-family: var(--default-font);
-  overflow-x: hidden;
+  overflow-x: hidden !important;
+  overflow: hidden;
   cursor: none;
   transition: background-color 0.45s, color 0.45s;
 }
@@ -1101,7 +1102,8 @@ body {
       z-index: 1;
       width: 110%;
       left: -5%;
-      overflow: hidden;
+      overflow: hidden !important;
+      overflow-x: hidden !important;
       height: 64px;
       margin: -22px 0 0;        /* pulls it UP so green overlaps top portion */
       transform: rotate(-4.5deg);
