@@ -109,7 +109,6 @@ body {
   color: var(--default-color);
   font-family: var(--default-font);
   overflow-x: hidden !important;
-  overflow: hidden;
   cursor: none;
   transition: background-color 0.45s, color 0.45s;
 }
@@ -1151,7 +1150,22 @@ body {
       background: rgba(255,255,255,0.55);
       flex-shrink: 0;
     }
-
+@media (max-width: 768px) {
+    .diagonal-ticker-outer {
+      position: relative;
+      z-index: 1;
+      width: 104.8%;
+      left: -5%;
+      overflow: hidden !important;
+      overflow-x: hidden !important;
+      height: 64px;
+      margin: -22px 0 0;        /* pulls it UP so green overlaps top portion */
+      transform: rotate(-4.5deg);
+      transform-origin: center;
+      box-shadow: 0 4px 18px rgba(247,147,30,0.25);
+    }
+ 
+}
 
 
 
