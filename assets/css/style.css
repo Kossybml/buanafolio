@@ -102,7 +102,7 @@
    RESET
 ════════════════════════════════════════════════════ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
 
 body {
   background-color: var(--background-color);
@@ -898,7 +898,7 @@ body {
       font-size: 25px;
       font-weight: 600;
       letter-spacing: 0.05em;
-      color: #ffffff;
+      color: var(--surface-color);
       white-space: nowrap;
     }
  
@@ -1234,7 +1234,7 @@ body {
       position: absolute;
       top: 3px; left: 3px;
       width: 22px; height: 22px;
-      background: #fff;
+      background: var(--surface-color);
       border-radius: 50%;
       font-size: 11px;
       font-weight: 700;
@@ -1378,6 +1378,9 @@ body {
       display: flex;
       flex-direction: column;
       gap: 11px;
+    }
+    [data-bs-theme="dark"] .pricing-card__features {
+      background: rgba(255,255,255,.08);
     }
     .pricing-card--featured .pricing-card__features {
       background: rgba(255,255,255,.08);

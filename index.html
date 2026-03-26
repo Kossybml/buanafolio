@@ -10,6 +10,20 @@
   <meta name="robots" content="index, follow">
   <meta name="language" content="en">
   <meta name="theme-color" content="#f7931e">
+  <script>
+    (function() {
+      const mq = window.matchMedia('(prefers-color-scheme: dark)');
+      const updateTheme = (e) => {
+        const dark = e.matches;
+        document.documentElement.setAttribute('data-bs-theme', dark ? 'dark' : 'light');
+        const themeColor = document.querySelector('meta[name="theme-color"]');
+        if (themeColor) themeColor.setAttribute('content', dark ? '#07061a' : '#f7931e');
+      };
+      updateTheme(mq);
+      if (mq.addEventListener) mq.addEventListener('change', updateTheme);
+      else if (mq.addListener) mq.addListener(updateTheme);
+    })();
+  </script>
   <title>Buana's Art | Best Graphic Designer </title>
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="assets/img/buana-logo.png" />
@@ -67,7 +81,7 @@
       <li><a href="#services">Services</a></li>
       <li><a href="#portfolio">My Works</a></li>
       <li><a href="#pricing">Pricing</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a href="#footer">Contact</a></li>
     </ul>
 
     <!-- hamburger (mobile only) -->
@@ -82,7 +96,7 @@
     <a href="#services">Services</a>
     <a href="#portfolio">My Works</a>
     <a href="#pricing">Pricing</a>
-    <a href="#contact">Contact</a>
+    <a href="#footer">Contact</a>
   </nav>
 
   <!-- ═══════════ HERO ═══════════ -->
@@ -227,7 +241,7 @@
   </div>
  
   <!-- ── SERVICES SECTION ── -->
-  <section class="services-section">
+  <section class="services-section" id="services">
     <div class="container">
  
       <!-- Header row -->
@@ -729,7 +743,7 @@
             <div class="row">
               <div class="col-12 col-md-4 mb-4 mb-md-0">
                 <span class="small italic">COPYRIGHT</span>
-                <p class="mb-0 fs-6">2026 © All right reserved</p>
+                <p class="mb-0 fs-6" id="copyright-year">2026 © All right reserved</p>
               </div>
               <div class="col-12 col-md-4 mb-4 mb-md-0">
                 <span class="small italic">Made with ❤ by</span> <br>
@@ -824,6 +838,28 @@
   function bgClose(e) { if (e.target === lb) closeLb(); }
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
 </script>
+  <script>
+    // Set current year in footer automatically
+    (function() {
+      const year = new Date().getFullYear();
+      const el = document.getElementById('copyright-year');
+      if (el) el.textContent = `${year} © All right reserved`;
+    })();
+
+    // Lock horizontal scrolling (defensive fallback)
+    (function() {
+      const setX = () => {
+        document.documentElement.style.overflowX = 'hidden';
+        document.body.style.overflowX = 'hidden';
+        if (window.scrollX !== 0) window.scrollTo(0, window.scrollY);
+      };
+      setX();
+      window.addEventListener('resize', setX);
+      window.addEventListener('scroll', () => {
+        if (window.scrollX !== 0) window.scrollTo(0, window.scrollY);
+      }, { passive: true });
+    })();
+  </script>
   <script src="assets/js/main.js"></script>
 </body>
 </html>
